@@ -1,0 +1,42 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    date (3.3.3)
+    diff-lcs (1.5.0)
+    nokogiri (1.15.4-x86_64-linux)
+      racc (~> 1.4)
+    open-uri (0.3.0)
+      stringio
+      time
+      uri
+    racc (1.7.1)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.1)
+    ruby (0.1.0)
+    stringio (3.0.8)
+    time (0.2.2)
+      date
+    uri (0.12.2)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  nokogiri
+  open-uri
+  rspec
+  ruby
+
+BUNDLED WITH
+   2.4.20
