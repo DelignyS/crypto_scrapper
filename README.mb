@@ -52,3 +52,58 @@ ETAPE 3 : Verifier que les éléments du tableau c'est bien un hashage avec Key 
 
   expect(crypto).to have_key(:name)
       expect(crypto).to have_key(:price)
+
+      LA GROSSE EXPLICATION DE Mairie_christmas.rb
+
+ETAPE 1 : LA PREPARATION
+
+Tout d'abord, nous devons nous préparer. Nous importons
+ deux bibliothèques : Nokogiri et Rest-Client. Nokogiri est utilisé pour analyser le HTML des pages web, tandis que
+ Rest-Client nous permet de télécharger ces pages.
+
+ require 'nokogiri'
+require 'rest-client'
+
+ETAPE 2 : LE SCRAP DES LIENS DES MAIRIE
+
+base_url = 'http://annuaire-des-mairies.com'
+region_url = 'http://annuaire-des-mairies.com/val-d-oise.html'
+district_doc_html = Nokogiri::HTML(URI.open(region_url))
+city_links = district_doc_html.css('a.lientxt')
+
+Nous parcourons ensuite les liens de chaque mairie et stockons leur nom et URL dans une liste.
+
+ETAPE 3 : La Collecte des Adresses E-mail :
+
+Maintenant que nous avons la liste des mairies, il est temps de visiter chacune
+d'entre elles pour récupérer leur adresse e-mail. Nous itérons sur chaque mairie
+et utilisons son URL pour accéder à sa page.
+
+city_links.each do |city_link|
+  # ...
+  city_doc_html = Nokogiri::HTML(URI.open(city_url))
+
+  En utilisant Nokogiri, nous recherchons l'élément contenant l'adresse e-mail 
+  en cherchant le texte "Adresse Email". Une fois que nous avons l'adresse, nous 
+  l'ajoutons à notre liste de résultats.
+
+email_elements = city_doc_html.css('td:contains("Adresse Email")')
+emails = email_elements.map { |element| element.next_element.text.strip }
+
+ETAPE 4 : La Limitation à 20 Mairies
+
+Pour nous assurer de ne pas dépasser notre objectif de 20 mairies, nous nous 
+arrêtons dès que notre liste de résultats atteint cette taille.
+
+break if result.length >= 20
+
+ETAPE 5 : L'Affichage des Résultats :
+
+Finalement, nous affichons les résultats avec un petit numéro d'index pour chaque mairie.
+
+result.each_with_index do |data, index|
+  data.each do |name, email|
+    puts "#{index + 1}. Ville: #{name}, Email: #{email}"
+  end
+end
+
