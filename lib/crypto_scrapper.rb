@@ -1,39 +1,34 @@
 require 'nokogiri'
 require 'rest-client'
 
-def crypto_scraper
+def top_10_crypto_scraper
   url = 'https://coinmarketcap.com/all/views/all/' # URL de CoinMarketCap
   response = RestClient.get(url)
   doc = Nokogiri::HTML(response)
 
-  crypto_list = []
+  crypto_data = []
 
-  # Scrappez les informations des cryptomonnaies
-  doc.css('tbody tr').each do |crypto_row|
-    crypto_name = crypto_row.css('.currency-name').text.strip
-    crypto_price = crypto_row.css('.price').text.strip.gsub(/\D/, '').to_f / 100.0 # Convertir le prix en nombre flottant
+  # Utilisez des XPaths pour extraire les noms et les prix des 10 premières cryptomonnaies
+  doc.xpath('//*[@id="__next"]/div[2]/div[2]/div/div[1]/div/div[2]/div[3]/div/table/tbody/tr[position() <= 10]').each do |crypto_row| # 10 cap 
+    crypto_name = crypto_row.at_xpath('.//td[2]/div/a[2]').text.strip
+    crypto_price_element = crypto_row.at_xpath('.//td[5]/div/a/span')
+    crypto_price = crypto_price_element.text.strip
 
-    # Assurez-vous que les données sont valides
-    if !crypto_name.empty? && crypto_price > 0
-      crypto_list << { crypto_name => crypto_price }
-    end
+    crypto_data << { name: crypto_name, price: crypto_price }
   end
 
-  # Triez les cryptomonnaies par prix, en ordre décroissant
-  sorted_crypto_list = crypto_list.sort_by { |crypto| crypto.values.first }.reverse
-
-  # Récupérez les 15 cryptomonnaies les plus chères
-  top_15_cryptos = sorted_crypto_list.take(15)
-
-  return top_15_cryptos
+  return crypto_data
 end
 
-# Appel de la fonction pour récupérer les données
-cryptos = crypto_scraper
+# la fonction appel le prix des 10 premières cryptomonnaies
+top_10_crypto_data = top_10_crypto_scraper
 
-# Affichage des résultats
-cryptos.each do |crypto|
-  crypto.each do |name, price|
-    puts "#{name}: $#{price}"
-  end
+# les 10 premières cryptomonnaies avec son index, son nom, son prix
+top_10_crypto_data.each_with_index do |crypto, index|
+  puts "Crypto ##{index + 1}: #{crypto[:name]}, Prix: #{crypto[:price]}"
 end
+
+
+
+
+

@@ -1,0 +1,12 @@
+LA GROSSE EXPLICATION DE MON APPLI Crypto_scrapper
+
+ETAPE 1 : La config de l'environnement
+    require 'nokogiri'
+    require 'rest-client'
+
+    Nous permettent de récup le contenu html(rest client), et de le traiter(Nokogiri)
+
+
+ETAPE 2 : Fonction de Scraping
+
+    top_10_crypto_scraper ==>
