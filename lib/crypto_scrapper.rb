@@ -12,7 +12,7 @@ def top_10_crypto_scraper
   doc.xpath('//*[@id="__next"]/div[2]/div[2]/div/div[1]/div/div[2]/div[3]/div/table/tbody/tr[position() <= 10]').each do |crypto_row| # 10 cap 
     crypto_name = crypto_row.at_xpath('.//td[2]/div/a[2]').text.strip
     crypto_price_element = crypto_row.at_xpath('.//td[5]/div/a/span')
-    crypto_price = crypto_price_element.text.strip
+    crypto_price = crypto_price_element.text.strip.gsub(/[^\d.]/, '').to_f
 
     crypto_data << { name: crypto_name, price: crypto_price }
   end

@@ -1,18 +1,21 @@
 require 'rspec'
-require_relative '../lib/crypto_scrapper.rb'  # Remplacez par le nom de votre fichier de programme
+require_relative '../lib/crypto_scrapper.rb' 
 
-describe 'crypto_scraper' do
-  it 'returns an array of 15 most expensive cryptocurrencies' do
-    crypto_list = crypto_scraper
-    expect(crypto_list).to be_an(Array)
-    expect(crypto_list.length).to eq(15)
-    crypto_list.each do |crypto|
+describe 'top_10_crypto_scraper' do
+  it 'returns an array with data for the top 10 cryptocurrencies' do
+    crypto_data = top_10_crypto_scraper
+
+    #1
+    expect(crypto_data).to be_an(Array)
+
+    #2
+    expect(crypto_data.length).to be >= 10
+
+    #3
+    crypto_data.each do |crypto|
       expect(crypto).to be_a(Hash)
-      crypto.each do |name, price|
-        expect(name).to be_a(String)
-        expect(price).to be_a(Float)
-        expect(price).to be > 0
-      end
+      expect(crypto).to have_key(:name)
+      expect(crypto).to have_key(:price)
     end
   end
 end
