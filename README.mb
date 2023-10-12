@@ -9,4 +9,27 @@ ETAPE 1 : La config de l'environnement
 
 ETAPE 2 : Fonction de Scraping
 
-    top_10_crypto_scraper ==>
+    1.top_10_crypto_scraper ==> On prend l'url "https://coinmarketcap.com/all/views/all/".
+    2.Avec Nokogiri::HTML(response) on annalyse le contenu HTML et le converti en 'objet Nokogiri" qui est parcourable.
+    3. RestClient.get(url) pour obtenir le contenu HTML de la page
+    4.Un tableau vide crypto_data dans lequel on va tout mettre, les données du scrap
+    5.On utilise Xpath pour parcourir le tableau des crypto, sur la page et on utilise doc.xpath pour obtenir une liste d'élèment scorrespondant à ces Xpaths
+    6.Pour chaques éléments du tableau on prend, nom et prix de la crypto, avec un xpath spécifique à la page.
+    7.On concat le nom et le prix dans le hash avec key:name et value:price
+    8. On ajout ce hash au tableau crypto_data
+    9.la fonction renvoi le tableau crypto_data
+
+ETAPE 3 : Appel de la fonction de Scrapping
+
+
+    On appel la fonction pour recuperer ses données et on le stock dans la variable
+    'top_10_crypto_data = top_10_crypto_scraper'
+
+ETAPE 4 : Affichage du résultat
+
+    On parcours le tableau et on affiche les 10 top cryptos avec 
+        top_10_crypto_data.each_with_index do |crypto, index|
+     puts "Crypto ##{index + 1}: #{crypto[:name]}, Prix: #{crypto[:price]}"
+    end
+
+    ça les affiches à la suite.
