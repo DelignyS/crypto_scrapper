@@ -13,7 +13,10 @@ ETAPE 2 : Fonction de Scraping
     2.Avec Nokogiri::HTML(response) on annalyse le contenu HTML et le converti en 'objet Nokogiri" qui est parcourable.
     3. RestClient.get(url) pour obtenir le contenu HTML de la page
     4.Un tableau vide crypto_data dans lequel on va tout mettre, les données du scrap
-    5.On utilise Xpath pour parcourir le tableau des crypto, row après row et cappé à 10, et après la row on pointe spécifiquement sur le name et le price sur la page et on utilise doc.xpath pour obtenir une liste d'élèment scorrespondant à ces Xpaths
+    5.On utilise Xpath pour parcourir le tableau des crypto, row après row et cappé à 10, et après la row on pointe spécifiquement sur le name et le price sur la page et on utilise 
+    doc.xpath pour obtenir une liste d'élèment scorrespondant à ces Xpaths
+    ####### crypto_price = crypto_price_element.text.strip.gsub(/[^\d.]/, '').to_f permet avec une expression regulière de typer crypto_price en float
+    
     6.Pour chaques éléments du tableau on prend, nom et prix de la crypto, avec un xpath spécifique à la page.
     7.On concat le nom et le prix dans le hash avec key:name et value:price
     8. On ajout ce hash au tableau crypto_data
